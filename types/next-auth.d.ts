@@ -12,6 +12,8 @@ declare module "next-auth" {
             city?: string | null;
             state?: string | null;
             zipcode?: string | null;
+            stripe_customer_id?: string | null;
+            subscription_status?: string | null;
         };
     }
 }

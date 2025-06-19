@@ -7,6 +7,22 @@ import {type Session } from "next-auth"
 import {getMyProfile} from "@/actions/getMyProfile";
 import { useRouter } from "next/navigation";
 
+const SubscriptionStatus = ({session} : {session: Session}) => {
+    if (session.user.subscription_status === 'basic') {
+        return (
+            <p>Subscription: <span className="px-2 py-1 border-blue-500 border-4 rounded-xl bg-yellow-100 text-blue-500 font-bold">Basic Plan</span></p>
+        )
+    } else if (session.user.subscription_status === 'premium') {
+        return (
+            <p>Subscription: <span className="px-2 py-1 border-purple-700 border-4 rounded-xl bg-yellow-100 text-purple-700 font-bold">Premium Plan</span></p>
+        )
+    } else {
+        return (
+            <p>Subscription: None</p>
+        )
+    }
+}
+
 export default function MyPage() {
     const {data: session} = useSession();
     const [profile, setProfile] = useState<Session["user"] | null>(null);
@@ -47,6 +63,7 @@ export default function MyPage() {
             <p>Your user ID is {session.user.id}.</p>
             <p>Your email is {session.user.email}.</p>
             <p>Your phone number is {profile.phone}.</p>
+            <SubscriptionStatus session={session}/>
             <p><strong>Address:</strong></p>
             <div className="ml-4">
                 <p>{profile.street}</p>
@@ -54,6 +71,13 @@ export default function MyPage() {
             </div>
 
             <div className="flex gap-2">
+                <button
+                    onClick={() => router.push("/checkout")}
+                    className="bg-orange-400 text-white px-4 py-2 rounded cursor-pointer"
+                >
+                    Purchase Test
+                </button>
+
                 <button
                     onClick={() => setShowModal(true)}
                     className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"

@@ -92,6 +92,8 @@ export const authOptions: NextAuthOptions = {
                 session.user.city = profile.city;
                 session.user.state = profile.state;
                 session.user.zipcode = profile.zipcode;
+                session.user.stripe_customer_id = profile.stripe_customer_id;
+                session.user.subscription_status = profile.subscription_status;
             }
 
             return session;
